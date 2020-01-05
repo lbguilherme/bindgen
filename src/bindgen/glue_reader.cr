@@ -4,7 +4,7 @@ module Bindgen
   class GlueReader
     PATH = "#{__DIR__}/../../assets/glue.cr"
 
-    MARKER = "########## SNIP ##########"
+    MARKER = "# ######### SNIP ######### #"
 
     # Returns the glue code from `PATH`, skipping the header.
     def self.read : String
