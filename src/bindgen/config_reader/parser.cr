@@ -210,8 +210,8 @@ module Bindgen
           end
         end
 
-        @pull_parser.read_next # Consume MAPPING_END
-
+        # Consume MAPPING_END
+        @pull_parser.read_next
       rescue err : ConditionEvaluator::Error
         ::raise Error.new(err.message, @pull_parser.start_line, @pull_parser.start_column, @path)
       end

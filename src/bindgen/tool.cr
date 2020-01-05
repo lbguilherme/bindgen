@@ -41,8 +41,8 @@ module Bindgen
 
       print_stats(stats) if @show_stats
 
-      0 # Success!
-
+      # Success!
+      return 0
     rescue err : ExitError
       err.code # Failure
     end
