@@ -5,7 +5,7 @@ LLVM_LIBS := $(shell $(LLVM_CONFIG) --system-libs --libs core)
 LLVM_INCLUDE_DIR := $(shell $(LLVM_CONFIG) --includedir)
 LLVM_LDFLAGS  := $(shell $(LLVM_CONFIG) --ldflags)
 # NOTE: No -ltinfo on OSX
-CLANG_LIBS := -lclang -lclangAST -lclangBasic -lclangFrontend -lclangLex -lclangTooling -lclangDriver -lclangParse -lclangASTMatchers
+CLANG_LIBS := -Wl,--start-group -lclang -lclangParse -lclangASTMatchers -lclangSema -lclangAnalysis -lclangAST -lclangEdit -lclangLex -lclangFrontend -lclangTooling -lclangDriver -lclangBasic -lclangSerialization -Wl,--end-group
 LIBS     := $(LLVM_LIBS) $(CLANG_LIBS) -ldl -pthread -lz -lcurses -ltinfo -lpcre
 DEFINES  := -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS
 CXXFLAGS := -std=c++11 $(DEFINES) -Iinclude -I$(LLVM_INCLUDE_DIR)
