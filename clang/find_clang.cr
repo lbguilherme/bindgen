@@ -24,6 +24,21 @@ def find_clang_binary : String?
   path_finder.find(clang_find_config)
 end
 
+def find_llvmconfig_binary : String?
+  llvmconfig_find_config = Bindgen::FindPath::PathConfig.from_yaml <<-YAML
+  kind: Executable
+  try:
+    - "llvm-config"
+  version:
+    min: "4.0.0"
+    command: "% --version"
+    regex: "([0-9.]+)"
+  YAML
+
+  path_finder = Bindgen::FindPath.new(__DIR__)
+  path_finder.find(llvmconfig_find_config)
+end
+
 def print_help_and_bail
   STDERR.puts <<-HELP
   You're missing the LLVM and/or Clang development libraries.
@@ -48,7 +63,8 @@ print_help_and_bail unless clang_binary && Process.find_executable(clang_binary)
 STDERR.puts "Using clang binary #{clang_binary.inspect}"
 
 # Find llvm-config binary
-llvm_config = ENV["LLVM_CONFIG"]
+llvm_config = ENV["LLVM_CONFIG"]? || find_llvmconfig_binary
+print_help_and_bail unless llvm_config && Process.find_executable(llvm_config)
 print_help_and_bail unless Process.find_executable(llvm_config)
 
 STDERR.puts "Using clang binary #{llvm_config.inspect}"
