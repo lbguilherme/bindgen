@@ -67,7 +67,7 @@ llvm_config = ENV["LLVM_CONFIG"]? || find_llvmconfig_binary
 print_help_and_bail unless llvm_config && Process.find_executable(llvm_config)
 print_help_and_bail unless Process.find_executable(llvm_config)
 
-STDERR.puts "Using clang binary #{llvm_config.inspect}"
+STDERR.puts "Using llvm-config binary #{llvm_config.inspect}"
 
 # Ask clang the paths it uses.
 output = `#{clang_binary} -### #{__DIR__}/src/bindgen.cpp 2>&1`.lines
